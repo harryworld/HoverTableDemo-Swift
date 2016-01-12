@@ -10,6 +10,8 @@ import Cocoa
 
 class ViewController: NSViewController {
 
+    @IBOutlet weak var tableView: NSTableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,3 +27,25 @@ class ViewController: NSViewController {
 
 }
 
+extension ViewController: NSTableViewDelegate {
+    func tableViewSelectionDidChange(notification: NSNotification) {
+        tableView.enumerateAvailableRowViewsUsingBlock { (rowView, row) -> Void in
+            if let cellView = rowView.viewAtColumn(0) as? NSTableCellView {
+                if rowView.selected {
+                    cellView.textField?.stringValue = "Icon \(row)"
+                    cellView.textField?.font = NSFont.boldSystemFontOfSize((cellView.textField?.font!.pointSize)!)
+                } else {
+                    
+                }
+            }
+        }
+    }
+}
+
+extension ViewController: NSTableViewDataSource {
+    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+        return 10
+    }
+    
+    
+}
